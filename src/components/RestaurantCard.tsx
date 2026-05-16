@@ -7,7 +7,7 @@ interface RestaurantCardProps {
 }
 
 export function RestaurantCard({ restaurant, onSelect }: RestaurantCardProps) {
-  const { name, cuisine, rating, reviewCount, priceRange, district, tags, image, isOpen } =
+  const { name, cuisine, rating, reviewCount, priceRange, district, tags, image } =
     restaurant
 
   return (
@@ -17,33 +17,15 @@ export function RestaurantCard({ restaurant, onSelect }: RestaurantCardProps) {
         className="restaurant-card__button"
         onClick={() => onSelect(restaurant)}
       >
-        <div className="restaurant-card__image-wrap">
-          <img src={image} alt={name} className="restaurant-card__image" loading="lazy" />
-          <span className={`restaurant-card__badge ${isOpen ? 'is-open' : 'is-closed'}`}>
-            {isOpen ? '영업중' : '영업종료'}
-          </span>
-        </div>
-
-        <div className="restaurant-card__body">
-          <div className="restaurant-card__meta">
-            <span className="restaurant-card__cuisine">{cuisine}</span>
-            <span className="restaurant-card__price">{PRICE_LABELS[priceRange]}</span>
-          </div>
-
+        <img src={image} alt="" className="restaurant-card__image" loading="lazy" />
+        <div>
           <h3 className="restaurant-card__name">{name}</h3>
-
-          <p className="restaurant-card__rating">
-            <span aria-hidden="true">★</span> {rating.toFixed(1)}
-            <span className="restaurant-card__reviews">({reviewCount})</span>
+          <p className="restaurant-card__info">
+            {cuisine} · {district} · {PRICE_LABELS[priceRange]}
           </p>
-
-          <p className="restaurant-card__district">{district}</p>
-
-          <ul className="restaurant-card__tags">
-            {tags.slice(0, 3).map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
+          <p className="restaurant-card__rating">
+            {rating.toFixed(1)} ({reviewCount}) · {tags.slice(0, 2).join(', ')}
+          </p>
         </div>
       </button>
     </article>

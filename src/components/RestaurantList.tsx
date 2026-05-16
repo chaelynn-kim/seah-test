@@ -10,11 +10,7 @@ export function RestaurantList({ restaurants, onSelect }: RestaurantListProps) {
   if (restaurants.length === 0) {
     return (
       <div className="empty-state">
-        <p className="empty-state__emoji" aria-hidden="true">
-          🍜
-        </p>
-        <p className="empty-state__title">검색 결과가 없습니다</p>
-        <p className="empty-state__hint">다른 키워드나 필터로 다시 시도해 보세요.</p>
+        <p>검색 결과가 없습니다.</p>
       </div>
     )
   }

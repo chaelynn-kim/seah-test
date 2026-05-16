@@ -11,6 +11,12 @@ interface FilterPanelProps {
   onOpenOnlyChange: (value: boolean) => void
 }
 
+const RATING_OPTIONS = [
+  { value: 0, label: '전체' },
+  { value: 4, label: '4.0+' },
+  { value: 4.5, label: '4.5+' },
+]
+
 export function FilterPanel({
   cuisine,
   district,
@@ -26,19 +32,18 @@ export function FilterPanel({
       <h2 className="filter-panel__title">필터</h2>
 
       <fieldset className="filter-group">
-        <legend>음식 종류</legend>
-        <div className="chip-list">
+        <legend>종류</legend>
+        <select
+          className="filter-select"
+          value={cuisine}
+          onChange={(e) => onCuisineChange(e.target.value)}
+        >
           {CUISINES.map((c) => (
-            <button
-              key={c}
-              type="button"
-              className={`chip ${cuisine === c ? 'chip--active' : ''}`}
-              onClick={() => onCuisineChange(c)}
-            >
+            <option key={c} value={c}>
               {c}
-            </button>
+            </option>
           ))}
-        </div>
+        </select>
       </fieldset>
 
       <fieldset className="filter-group">
@@ -57,29 +62,27 @@ export function FilterPanel({
       </fieldset>
 
       <fieldset className="filter-group">
-        <legend>최소 평점</legend>
-        <div className="rating-filter">
-          {[0, 4, 4.5].map((r) => (
-            <button
-              key={r}
-              type="button"
-              className={`chip ${minRating === r ? 'chip--active' : ''}`}
-              onClick={() => onMinRatingChange(r)}
-            >
-              {r === 0 ? '전체' : `${r}+`}
-            </button>
+        <legend>평점</legend>
+        <select
+          className="filter-select"
+          value={minRating}
+          onChange={(e) => onMinRatingChange(Number(e.target.value))}
+        >
+          {RATING_OPTIONS.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
           ))}
-        </div>
+        </select>
       </fieldset>
 
-      <label className="toggle">
+      <label className="filter-check">
         <input
           type="checkbox"
           checked={openOnly}
           onChange={(e) => onOpenOnlyChange(e.target.checked)}
         />
-        <span className="toggle__track" />
-        <span>영업 중만 보기</span>
+        영업 중
       </label>
     </aside>
   )

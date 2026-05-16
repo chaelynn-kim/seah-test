@@ -33,7 +33,7 @@ function App() {
         <section className="main__toolbar">
           <SearchBar value={query} onChange={setQuery} />
           <p className="result-count">
-            <strong>{filtered.length}</strong>곳 / 전체 {total}곳
+            {filtered.length} / {total}
           </p>
         </section>
 

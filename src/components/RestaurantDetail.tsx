@@ -7,6 +7,8 @@ interface RestaurantDetailProps {
 }
 
 export function RestaurantDetail({ restaurant, onClose }: RestaurantDetailProps) {
+  const status = restaurant.isOpen ? '영업중' : '영업종료'
+
   return (
     <div className="modal-overlay" onClick={onClose} role="presentation">
       <dialog
@@ -15,43 +17,28 @@ export function RestaurantDetail({ restaurant, onClose }: RestaurantDetailProps)
         onClick={(e) => e.stopPropagation()}
         aria-labelledby="detail-title"
       >
-        <button type="button" className="detail-modal__close" onClick={onClose} aria-label="닫기">
-          ✕
+        <button type="button" className="detail-modal__close" onClick={onClose}>
+          닫기
         </button>
 
-        <img
-          src={restaurant.image}
-          alt={restaurant.name}
-          className="detail-modal__image"
-        />
+        <h2 id="detail-title" className="detail-modal__title">
+          {restaurant.name}
+        </h2>
 
-        <div className="detail-modal__content">
-          <div className="detail-modal__header">
-            <span className={`detail-modal__status ${restaurant.isOpen ? 'is-open' : 'is-closed'}`}>
-              {restaurant.isOpen ? '영업중' : '영업종료'}
-            </span>
-            <span className="detail-modal__cuisine">{restaurant.cuisine}</span>
-            <span className="detail-modal__price">{PRICE_LABELS[restaurant.priceRange]}</span>
-          </div>
+        <p className="detail-modal__meta">
+          {status} · {restaurant.cuisine} · {PRICE_LABELS[restaurant.priceRange]} ·{' '}
+          {restaurant.rating.toFixed(1)} ({restaurant.reviewCount})
+        </p>
 
-          <h2 id="detail-title" className="detail-modal__title">
-            {restaurant.name}
-          </h2>
+        <p className="detail-modal__meta">{restaurant.address}</p>
 
-          <p className="detail-modal__rating">
-            ★ {restaurant.rating.toFixed(1)}{' '}
-            <span>(리뷰 {restaurant.reviewCount}개)</span>
-          </p>
+        <p className="detail-modal__description">{restaurant.description}</p>
 
-          <p className="detail-modal__address">{restaurant.address}</p>
-          <p className="detail-modal__description">{restaurant.description}</p>
-
-          <ul className="detail-modal__tags">
-            {restaurant.tags.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-        </div>
+        <ul className="detail-modal__tags">
+          {restaurant.tags.map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
       </dialog>
     </div>
   )
